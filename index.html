@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Velar AI Tools Explorer & Recommender</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+
+    <link rel="stylesheet" href="/static/main.css" />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Velar AI</a>
+        <div class="d-flex">
+          <a class="btn btn-outline-light btn-sm me-2" href="/api/download-whitepaper">Download Whitepaper</a>
+          <a class="btn btn-outline-info btn-sm" href="#" id="open-copilot">Open Copilot</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div class="row g-3">
+        <div class="col-md-8">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Tools Explorer</h5>
+              <p class="text-muted">Interactive view of the uploaded Generative AI dataset.</p>
+
+              <!-- Filters -->
+              <div class="row gy-2">
+                <div class="col-md-4">
+                  <select id="filter-category" class="form-select">
+                    <option value="">All categories</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <select id="filter-modality" class="form-select">
+                    <option value="">All modalities</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <select id="filter-open" class="form-select">
+                    <option value="">Any</option>
+                    <option value="1">Open source</option>
+                    <option value="0">Closed</option>
+                  </select>
+                </div>
+                <div class="col-md-3 text-end">
+                  <button id="btn-refresh" class="btn btn-primary">Refresh</button>
+                  <button id="btn-reset" class="btn btn-outline-secondary">Reset</button>
+                </div>
+              </div>
+
+              <hr/>
+
+              <!-- Table -->
+              <div style="max-height:420px; overflow:auto;">
+                <table class="table table-sm table-hover" id="tools-table">
+                  <thead class="table-light sticky-top">
+                    <tr>
+                      <th>tool_name</th><th>company</th><th>category</th><th>modality</th><th>open</th><th>api</th><th>year</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tools-body"></tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <!-- Summary & Charts -->
+          <div class="card shadow-sm mb-3">
+            <div class="card-body">
+              <h6>Dataset Summary</h6>
+              <div id="summary-stats">
+                <p class="text-muted">Loading...</p>
+              </div>
+              <canvas id="catChart" height="200"></canvas>
+            </div>
+          </div>
+
+          <!-- Recommendations -->
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h6>What to build (automated)</h6>
+              <div id="recommender">
+                <p class="text-muted">Loading recommendations...</p>
+              </div>
+              <hr/>
+              <h6 class="mb-1">Quick Copilot</h6>
+              <div class="input-group mb-2">
+                <input id="copilot-prompt" type="text" class="form-control" placeholder="Ask: 'Explain impermanent loss'">
+                <button id="copilot-send" class="btn btn-primary">Ask</button>
+              </div>
+              <div id="copilot-response" class="small text-muted"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- Copilot Modal -->
+    <div class="modal fade" id="copilotModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Velar Copilot (prototype)</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div id="copilot-log" class="mb-3 small"></div>
+            <div class="input-group">
+              <input id="modal-prompt" type="text" class="form-control" placeholder="Ask Velar Copilot...">
+              <button id="modal-send" class="btn btn-primary">Send</button>
+            </div>
+            <div id="modal-response" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/main.js"></script>
+  </body>
+</html>
