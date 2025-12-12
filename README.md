@@ -1,1 +1,1 @@
-this is generative
+This is generative ai
